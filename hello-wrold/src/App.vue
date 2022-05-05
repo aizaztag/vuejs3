@@ -1,76 +1,102 @@
 <template>
-<div  :id="id">
-  {{name}}
-  <button :disabled="isDisabled">Bind</button>
-  <h2 :class="status">Bind</h2>
-  <h2 :class="isPromoted && 'promoted'">Italic</h2>
-  <h2 :class="isSoldOut ? 'sold-out' : 'new'">Sold or new</h2>
-  <h2 :class="['new' , 'promoted']">new or promoted</h2>
-   array class  
-  <h2 :class="[isPromoted && 'promoted' , isSoldOut ? 'sold-out' : 'new']"> array conditional new or promoted</h2>
-  object class
-  <h2 :class="{
-      promoted: isPromoted,
-      'sold-out': isSoldOut,
-      new: ! isSoldOut
-    }"
-   > 
-  array conditional new or promoted</h2>
-
-     object Style
-   <h2 :style="{
-          color: hightlightColor,
-          'font-style': fontStyle,
-          fontSize: fontStyle + 'px',
-   }">
-     Font Style
-   </h2>
-
-
-     object Style
-   <h2 :style="styleObject">
-     Font Style Object
-   </h2>
-
-    <div :style="[styleBase , styleSuccess]">
-        array style class
-    </div>
-
-</div>
-
+  <!-- <Article id="1-d" :title="title" :kabab-case="kababCase" :likes="likes" :status="status"></Article> -->
+   
+  <!-- <button @click="showPopUP = true">Show Popup</button> -->
+  <!-- <PopUp v-show="showPopUP" @close="showPopUP = false"></PopUp> -->
   
+  <!-- <Slots>
+    <template v-slot:header>
+            <h1>Header</h1>
+    </template>
+    <template v-slot:default>
+            <h1>content</h1>
+    </template>
+    <template v-slot:footer>
+            <h1>footer</h1>
+    </template>
+  </Slots> -->
+<!-- <SlotsProps>
+  <template v-slot:main="SlotsProps">
+        {{  SlotsProps.firstName }} {{  SlotsProps.lastName }}
+  </template>
+</SlotsProps>
+
+<SlotsProps>
+  <template v-slot:main="SlotsProps">
+       {{  SlotsProps.lastName }}   {{  SlotsProps.firstName }}
+  </template>
+</SlotsProps> -->
+
+<!-- <CustomComponent v-model="name"></CustomComponent> -->
+
+<!-- tabs nav -->
+<!-- <TabBar :activeTab="activeTab" @activeTab="tabToActive"></TabBar> -->
+
+<!-- teleport -->
+ <div class="container">
+    <div class="content">
+      <h1>My App</h1>
+      <p>
+        This is an example of how you might use Vue Teleport. I think it is a
+        pretty neat API that is yet another awesome escape hatch that Vue
+        provides for practical reasons. Sometimes you just need to render
+        something completely outside the Vue component tree.
+      </p>
+      <button @click="showModal = true">Show Modal</button>
+      <teleport to="#modal-root">
+        <TeleportModal v-show="showModal" @close="showModal = false">
+          This is the secret modal message!
+        </TeleportModal>
+      </teleport>
+    </div>
+  </div>
 </template>
 
 <script>
+import Rendering from "./components/Rendering.vue";
+import RBasic from "./components/RBasic.vue";
+import ListRendering from "./components/ListRendering.vue";
+import Methods from "./components/Methods.vue";
+import FormHandling from "./components/FormHandling.vue";
+import Computed from "./components/Computed.vue";
+import watch from "./components/watch.vue";
+import Greet from "./components/comp/Greet.vue";
+import Article from "./components/comp/Article.vue";
+import ComponentC from "./components/comp/ComponentC.vue";
+import PopUp from "./components/comp/PopUp.vue";
+import Slots from "./components/comp/Slots.vue";
+import SlotsProps from "./components/comp/SlotsProps.vue";
+import CustomComponent from "./components/comp/CustomComponent.vue";
+import TabBar from "./components/comp/DynamicComponent/TabBar.vue";
+import TeleportModal from "./components/comp/TeleportModal.vue";
 
 export default {
-  name: 'App',
-  data(){
+  components: { TeleportModal },
+  name: "App",
+  data() {
     return {
-      name  : "'<b>Aizaz</b>'",
-      id  : "3",
-      isDisabled:false,
-      status:'underline',
-      isPromoted:true,
-      isSoldOut:false,
-      hightlightColor:'Orange',
-      fontStyle:'50',
-      styleObject:{
-        color:'red',
-        fontSize:'60px'
-      },
-       styleBase:{
-        color:'green',
-        fontSize:'60px'
-      },
-       styleSuccess:{
-        fontStyle:'italic',
-        padding:'60px'
-      }
+      title: "Article",
+      name: "Aizaz",
+      title: "Article",
+      likes: 2,
+      status: false,
+      kababCase: "camelCase",
+      showPopUP: false,
+      activeTab : 'TabA',
+       showModal: false,
+    };
+  },
+  methods:{
+    tabToActive(tab){
+        this.activeTab = tab
     }
-  }
-  
-}
+  },
+  provide() {
+    return {
+      username: this.name,
+    };
+  },
+};
 </script>
 
 <style>
@@ -82,19 +108,19 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.underline{
+.underline {
   text-decoration: underline;
 }
 
-.promoted{
+.promoted {
   font-style: italic;
 }
 
-.new{
+.new {
   color: green;
 }
 
-.sold-out{
+.sold-out {
   color: red;
 }
 </style>
